@@ -1,0 +1,9 @@
+{
+  "name": "gawr",
+  "description": "Google AdWords reporting tool.",
+  "version": "0.0.1",
+  "dependencies": {
+    "param": "~0.3.1",
+    "optimist": "~0.6.0"
+  }
+}

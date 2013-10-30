@@ -1,0 +1,41 @@
+#!/usr/bin/env node
+
+var param = require('param');
+var argv = require('optimist').argv;
+var https = require('https');
+var awql = argv.awql
+    ? argv.awql : 'SELECT Id, Name FROM CAMPAIGN_PERFORMANCE_REPORT DURING 20120101,20120625';
+var format = argv.format
+    ? argv.format : 'CSV';
+var reportUri = 'https://adwords.google.com/api/adwords/reportdownload/v201309';
+var body = '__rdquery='+encodeURIComponent(awql)+'&__fmt='+format;
+var headers = {
+    Authorization: 'GoogleLogin auth=' + param('auth'),
+    developerToken: param('developerToken'),
+    clientCustomerId: param('clientCustomerId'),
+    returnMoneyInMicros: param('returnMoneyInMicros'),
+    "Content-Type": 'application/x-www-form-urlencoded',
+    "Content-Length": body.length
+};
+
+var post_options = {
+    hostname: "adwords.google.com",
+    port: 443,
+    path: '/api/adwords/reportdownload/v201309',
+    method: 'POST',
+    headers: headers
+};
+
+var post_req = https.get(post_options, function(res) {
+    res.setEncoding('utf8');
+    res.on('data', function(chunk) {
+        console.log(chunk);
+    });
+});
+
+post_req.on('error', function(e) {
+    console.log('Problem with request: ' + e.message);
+});
+
+post_req.write(body);
+post_req.end();
