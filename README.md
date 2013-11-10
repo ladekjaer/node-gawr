@@ -24,6 +24,10 @@ To specify the output format type
 
     $ gawr --format TSV "SELECT Id, Name, Clicks FROM CAMPAIGN_PERFORMANCE_REPORT DURING 20131010,20131012"
 
+To read from standard input use
+
+    $ gawr -
+
 ###License
 
 MIT
