@@ -14,25 +14,30 @@ if (!fs.existsSync(configPath)) {
 }
 
 // Read input or set defaults.
-//var awql = argv._[0] || readStdIn();
 var format = argv.format || 'CSV';
 format = format.toUpperCase();
 
 var getAwql = function(callback) {
-    if (argv._[0]) {
+    if (!argv._[0]) {
+        callback(null, false);
+        return;
+    }
+    if (argv._[0] && argv._[0] !== '-') {
         callback(null, argv._[0]);
         return;
     }
-    var buf = '';
-    process.stdin.resume();
-    process.stdin.setEncoding('utf8');
-    process.stdin.on('data', function(chunk) {
-        buf += chunk;
-    });
-    process.stdin.on('end', function() {
-        callback(null, buf);
-        return;
-    });
+    if (argv._[0] && argv._[0] === '-') {
+        var buf = '';
+        process.stdin.resume();
+        process.stdin.setEncoding('utf8');
+        process.stdin.on('data', function(chunk) {
+            buf += chunk;
+        });
+        process.stdin.on('end', function() {
+            callback(null, buf);
+            return;
+        });
+    }
 };
 
 getAwql(function(err, awql) {
@@ -49,6 +54,7 @@ getAwql(function(err, awql) {
     }
 
     var body = '__rdquery='+encodeURIComponent(awql)+'&__fmt='+format;
+
     // Check if format is proper.
     var formats = [
         'CSVFOREXCEL'
