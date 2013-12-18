@@ -127,7 +127,8 @@ getAwql(function(err, awql) {
             loadHeader('developerToken', function(err, value) {
                 headers['developerToken'] = value;
                 loadHeader('clientCustomerId', function(err, value) {
-                    headers['clientCustomerId'] = value;
+                    if (argv.customerId) headers['clientCustomerId'] = argv.customerId;
+                    else headers['clientCustomerId'] = value;
                     loadHeader('returnMoneyInMicros', function(err, value) {
                         headers['returnMoneyInMicros'] = value;
                         callback(null, headers);
