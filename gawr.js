@@ -86,6 +86,7 @@ getAwql(function(err, awql) {
             obj[field] = value;
             dotjson.set(configPath, obj, {createFile: true}); 
             readline.close();
+            readline = null;
             callback(null, value);
         });
     };
