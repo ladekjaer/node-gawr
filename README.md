@@ -28,6 +28,10 @@ To read from standard input use
 
     $ gawr -
 
+To specify another client customer id than the one in the config file
+
+    $ gawr --customerId "123-456-7890" "SELECT Id, Name, Clicks FROM CAMPAIGN_PERFORMANCE_REPORT DURING 20131010,20131012"
+
 ###License
 
 MIT
