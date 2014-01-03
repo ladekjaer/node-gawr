@@ -122,8 +122,8 @@ getAwql(function(err, awql) {
             "Content-Type": 'application/x-www-form-urlencoded',
             "Content-Length": body.length
         };
-        loadHeader('auth', function(err, value) {
-            headers['Authorization'] = 'GoogleLogin auth=';
+        loadHeader('accessToken', function(err, value) {
+            headers['Authorization'] = 'Bearer ';
             headers['Authorization'] +=value;
             loadHeader('developerToken', function(err, value) {
                 headers['developerToken'] = value;

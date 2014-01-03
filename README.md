@@ -10,8 +10,17 @@ One-line install
 
 Upon first run you would be asked for your credentials.
 
-See [SOAP Primer](https://developers.google.com/adwords/api/docs/guides/soap) for
-information on how to obtain auth token.
+The app is using [OAuth 2.0](https://developers.google.com/accounts/docs/OAuth2) to access
+the Google AdWords API. Go to
+[OAuth 2.0 Playground](https://developers.google.com/oauthplayground/)
+to get an access token. In step 1 enter
+
+    $ https://adwords.google.com/api/adwords
+
+as the scope.
+
+In step 2 clicks the button labeled "Exchange authorization code for tokens". You can
+now see an access token. Step 3 is not nessesary.
 
 ###Usage
 
