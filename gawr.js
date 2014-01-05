@@ -6,6 +6,7 @@ var configPath = require('osenv').home()+'/.gawr';
 var optimist = require('optimist')
 var argv = optimist.argv;
 var https = require('https');
+var edit = require('string-editor');
 
 if (argv.version) {
     var config = require('./package');
@@ -24,6 +25,13 @@ var format = argv.format || 'CSV';
 format = format.toUpperCase();
 
 var getAwql = function(callback) {
+    if (argv.i || argv.interactive) {
+        edit('SELECT ', 'awql.sql', function(err, awql) {
+            if (err) return callback(err);
+            callback(null, awql);
+        });
+        return;
+    }
     if (!argv._[0]) {
         callback(null, false);
         return;

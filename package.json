@@ -1,13 +1,14 @@
 {
   "name": "gawr",
   "description": "Google AdWords reporting tool.",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "bin": {
     "gawr": "./gawr.js"
   },
   "dependencies": {
     "optimist": "~0.6.0",
     "osenv": "0.0.3",
-    "dotjson": "~0.1.3"
+    "dotjson": "~0.1.3",
+    "string-editor": "~0.1.0"
   }
 }
