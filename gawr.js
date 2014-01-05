@@ -7,6 +7,12 @@ var optimist = require('optimist')
 var argv = optimist.argv;
 var https = require('https');
 
+if (argv.version) {
+    var config = require('./package');
+    console.log(config.version);
+    process.exit(0);
+}
+
 // Create empty config-file if it does not exists.
 var fs = require('fs');
 if (!fs.existsSync(configPath)) {
