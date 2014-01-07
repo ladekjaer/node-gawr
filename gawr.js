@@ -7,6 +7,7 @@ var optimist = require('optimist')
 var argv = optimist.argv;
 var https = require('https');
 var edit = require('string-editor');
+var auth = require('adwords-auth');
 
 if (argv.version) {
     var config = require('./package');
@@ -89,6 +90,19 @@ getAwql(function(err, awql) {
     var setHeader = function(field, callback) {
         if (field === 'returnMoneyInMicros') {
             setMoneyFormat(callback);
+            return;
+        }
+        if (field === 'accessToken') {
+            loadHeader('clientId', function(err, clientId) {
+                loadHeader('clientSecret', function(err, clientSecret) {
+                    loadHeader('redirectUri', function(err, redirectUri) {
+                        auth(clientId, clientSecret, redirectUri, function(err, tokens) {
+                            if (err) throw callback(err, null);
+                            callback(null, tokens.access_token);
+                        });
+                    });
+                });
+            });
             return;
         }
         readline = readline || require('readline').createInterface({
