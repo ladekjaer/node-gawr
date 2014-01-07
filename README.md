@@ -11,16 +11,9 @@ One-line install
 Upon first run you would be asked for your credentials.
 
 The app is using [OAuth 2.0](https://developers.google.com/accounts/docs/OAuth2) to access
-the Google AdWords API. Go to
-[OAuth 2.0 Playground](https://developers.google.com/oauthplayground/)
-to get an access token. In step 1 enter
+the Google AdWords API.
 
-    $ https://adwords.google.com/api/adwords
-
-as the scope.
-
-In step 2 clicks the button labeled "Exchange authorization code for tokens". You can
-now see an access token. Step 3 is not nessesary.
+You will have to registrer the app here [Google Developers Console](https://cloud.google.com/console#/project). Please specify http://localhost as Redirect URIs.
 
 ###Usage
 
