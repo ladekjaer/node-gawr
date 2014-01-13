@@ -95,10 +95,29 @@ getAwql(function(err, awql) {
         if (field === 'accessToken') {
             loadHeader('clientId', function(err, clientId) {
                 loadHeader('clientSecret', function(err, clientSecret) {
-                    loadHeader('redirectUri', function(err, redirectUri) {
-                        auth(clientId, clientSecret, redirectUri, function(err, tokens) {
+                    loadHeader('refreshToken', function(err, refreshToken) {
+                        auth.refresh(clientId, clientSecret, refreshToken, function(err, token) {
                             if (err) throw callback(err, null);
-                            callback(null, tokens.access_token);
+                            callback(null, token.access_token);
+                        });
+                    });
+                });
+            });
+            return;
+        }
+        if (field === 'refreshToken') {
+            loadHeader('clientId', function(err, clientId) {
+                loadHeader('clientSecret', function(err, clientSecret) {
+                    loadHeader('redirectUri', function(err, redirectUri) {
+                        auth.getTokens(clientId, clientSecret, redirectUri, function(err, tokens) {
+                            if (err) throw callback(err, null);
+                            dotjson.set(configPath,
+                                {
+                                    refreshToken: tokens.refresh_token,
+                                    accessToken: tokens.access_token
+                                },
+                                {createFile: true});
+                            callback(null, tokens.refresh_token);
                         });
                     });
                 });
