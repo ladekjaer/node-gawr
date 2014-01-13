@@ -98,6 +98,12 @@ getAwql(function(err, awql) {
                     loadHeader('refreshToken', function(err, refreshToken) {
                         auth.refresh(clientId, clientSecret, refreshToken, function(err, token) {
                             if (err) throw callback(err, null);
+                            dotjson.set(configPath,
+                                {
+                                    accessToken: token.access_token,
+                                    accessTokenExpires: token.expires
+                                },
+                                {createFile: true});
                             callback(null, token.access_token);
                         });
                     });
@@ -114,7 +120,8 @@ getAwql(function(err, awql) {
                             dotjson.set(configPath,
                                 {
                                     refreshToken: tokens.refresh_token,
-                                    accessToken: tokens.access_token
+                                    accessToken: tokens.access_token,
+                                    accessTokenExpires: tokens.expires
                                 },
                                 {createFile: true});
                             callback(null, tokens.refresh_token);
@@ -159,6 +166,13 @@ getAwql(function(err, awql) {
     };
 
     var loadHeader = function(header, callback) {
+        if (header === 'accessToken') {
+            var token = dotjson.get(configPath, 'accessToken');
+            var expires = dotjson.get(configPath, 'accessTokenExpires');
+            var now = new Date().getTime();
+            if (token && expires && now < expires) return callback(null, token);
+            return setHeader('accessToken', callback);
+        }
         var value = dotjson.get(configPath, header);
         if (value !== undefined && value !== null) return callback(null, value);
         setHeader(header, callback);
