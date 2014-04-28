@@ -7,7 +7,7 @@ var optimist = require('optimist')
 var argv = optimist.argv;
 var https = require('https');
 var edit = require('string-editor');
-var auth = require('./../adwords-auth/index.js');
+var auth = require('adwords-auth');
 
 if (argv.version) {
     var config = require('./package');
