@@ -11,6 +11,6 @@
     "dotjson": "~0.1.3",
     "string-editor": "~0.1.0",
     "open": "0.0.4",
-    "adwords-auth": "0.0.7"
+    "adwords-auth": "0.0.8"
   }
 }
