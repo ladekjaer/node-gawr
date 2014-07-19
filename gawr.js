@@ -88,10 +88,6 @@ getAwql(function(err, awql) {
     var readline;
 
     var setHeader = function(field, callback) {
-        if (field === 'returnMoneyInMicros') {
-            setMoneyFormat(callback);
-            return;
-        }
         if (field === 'accessToken') {
             loadHeader('clientId', function(err, clientId) {
                 loadHeader('clientSecret', function(err, clientSecret) {
@@ -145,26 +141,6 @@ getAwql(function(err, awql) {
         });
     };
 
-    var setMoneyFormat = function(callback) {
-        readline = readline || require('readline').createInterface({
-            input: process.stdin,
-            output: process.stdout
-        });
-        readline.question('Return money in micros? (y/n)', function(value) {
-            if (value === 'y') {
-                readline.close();
-                dotjson.set(configPath, {returnMoneyInMicros: true}, {createFile: true});
-                return callback(null, true);
-            }
-            if (value === 'n') {
-                readline.close();
-                dotjson.set(configPath, {returnMoneyInMicros: false}, {createFile: true});
-                return callback(null, false);
-            }
-            setMoneyFormat(callback);
-        });
-    };
-
     var loadHeader = function(header, callback) {
         if (header === 'accessToken') {
             var token = dotjson.get(configPath, 'accessToken');
@@ -191,10 +167,7 @@ getAwql(function(err, awql) {
                 loadHeader('clientCustomerId', function(err, value) {
                     if (argv.customerId) headers['clientCustomerId'] = argv.customerId;
                     else headers['clientCustomerId'] = value;
-                    loadHeader('returnMoneyInMicros', function(err, value) {
-                        headers['returnMoneyInMicros'] = value;
                         callback(null, headers);
-                    });
                 });
             });
         });
@@ -205,7 +178,7 @@ getAwql(function(err, awql) {
         var post_options = {
             hostname: "adwords.google.com",
             port: 443,
-            path: '/api/adwords/reportdownload/v201402',
+            path: '/api/adwords/reportdownload/v201406',
             method: 'POST',
             headers: headers
         };
