@@ -1,7 +1,7 @@
 {
   "name": "gawr",
   "description": "Google AdWords reporting tool.",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "bin": {
     "gawr": "./gawr.js"
   },
