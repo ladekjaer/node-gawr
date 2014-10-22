@@ -13,7 +13,7 @@ Upon first run you would be asked for your credentials.
 The app is using [OAuth 2.0](https://developers.google.com/accounts/docs/OAuth2) to access
 the Google AdWords API.
 
-You will have to registrer the app here [Google Developers Console](https://cloud.google.com/console#/project). Please specify http://localhost as Redirect URIs.
+You will have to registrer the app here [Google Developers Console](https://cloud.google.com/console#/project). Please specify http://localhost:3000 as Redirect URIs.
 
 ###Usage
 
